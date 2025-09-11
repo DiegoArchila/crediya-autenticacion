@@ -1,0 +1,33 @@
+services:
+  postgres-autenticacion:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: Su93rStr0ngP@ssw0rdR00t
+      POSTGRES_DB: crediya_autenticacion_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - crediya_autenticacion_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - crediya-red-autenticacion
+
+  pgadmin-autenticacion:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@crediya.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8084:80"
+    depends_on:
+      - postgres-autenticacion
+    networks:
+      - crediya-red-autenticacion
+
+volumes:
+  crediya_autenticacion_data:
+
+networks:
+  crediya-red-autenticacion:
+    driver: bridge
