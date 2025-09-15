@@ -75,7 +75,15 @@ public class UserUseCase {
     }
 
     public Mono<Boolean> existsByDniNumber(String dniNumber) {
-        return userRepository.existsByDniNumber(dniNumber);
+
+        return userRepository.existsByDniNumber(dniNumber)
+                .doOnNext(exists -> {
+                    if (!exists) {
+                        throw new ExceptionHandler(UserErrorCode.USER_NOT_FOUND);
+                    }
+                })
+                .thenReturn(true);
+
     }
 
     public Flux<User> findAll() {

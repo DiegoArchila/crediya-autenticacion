@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
+
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,7 +76,14 @@ public class UserRouterRest {
     )
     public RouterFunction<ServerResponse> routerFunction(UserHandler handler) {
 
-        return route(POST(userPath.getUsuario()), handler::listenSaveUser);
+        return route(POST(userPath.getUser()), handler::listenSaveUser);
+
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> routerFunctionUser(UserHandler handler) {
+
+        return route(GET(userPath.getUser()), handler::listenExistsByIdUser);
 
     }
 }

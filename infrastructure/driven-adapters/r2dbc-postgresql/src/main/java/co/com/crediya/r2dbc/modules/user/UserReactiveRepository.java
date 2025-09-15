@@ -17,6 +17,9 @@ public interface UserReactiveRepository extends
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM users u WHERE TRIM(LOWER(u.email)) = TRIM(LOWER(:email))")
     Mono<Boolean> existsByEmail(@Param("email") String email);
 
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM users u WHERE TRIM(u.dni_number) = TRIM(:dniNumber)")
+    Mono<Boolean> existsByDniNumber(@Param("dniNumber") String dniNumber);
+
     @Query("SELECT u FROM users u WHERE TRIM(u.dni_number) = TRIM(:dniNumber)")
     Mono<UserEntity> findByDniNumber(@Param("dniNumber") String dniNumber);
 

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 @Component
 @RequiredArgsConstructor
 public class UserHandler {
+
     private static final Logger logger = LoggerFactory.getLogger(UserHandler.class);
     private final UserUseCase userUseCase;
 
@@ -34,6 +35,8 @@ public class UserHandler {
                 .map(responseDto -> ResponseApiFactory.responseApi(
                         null,
                         null,
+                        null,
+                        null,
                         true,
                         "Usuario creado exitosamente",
                         responseDto))
@@ -43,5 +46,26 @@ public class UserHandler {
 
     }
 
+    public Mono<ServerResponse> listenExistsByIdUser (ServerRequest serverRequest) {
+
+        String dni = serverRequest.queryParam("dni").orElse(null);
+
+        logger.info("Received request to check existence of user by ID: {}", dni);
+
+        return userUseCase.existsByDniNumber(dni)
+                .doOnNext(exists -> logger.info("Existence check result for ID {}: {}", dni, exists))
+                .map(exists -> ResponseApiFactory.responseApi(
+                        null,
+                        null,
+                        null,
+                        null,
+                        true,
+                        "Usuario existe en el sistema",
+                        null))
+                .flatMap(responseApi -> ServerResponse.status(HttpStatus.OK)
+                        .bodyValue(responseApi))
+                .doOnError(error -> logger.error("Error checking existence by ID", error));
+
+    }
 
 }

@@ -40,7 +40,10 @@ public enum UserErrorCode implements MessageException {
             400, TypeException.ValidationException.toString()),
 
     baseSalary_ExceedsMaximum("Validation_baseSalary_ExceedsMaximum","El salario base no puede ser mayor a 15000000.00",
-            400, TypeException.ValidationException.toString());
+            400, TypeException.ValidationException.toString()),
+
+    USER_NOT_FOUND("User_Not_Found","Usuario no encontrado",
+            404, TypeException.BusinessException.toString());
 
     private final String code;
     private final String message;

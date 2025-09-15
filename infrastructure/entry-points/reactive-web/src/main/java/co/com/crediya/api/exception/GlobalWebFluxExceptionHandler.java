@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
+import java.time.OffsetDateTime;
+
 
 @Component
 @Order(-2) // Prioridad alta para que se ejecute antes que el default
@@ -57,6 +59,8 @@ public class GlobalWebFluxExceptionHandler implements WebExceptionHandler {
         ResponseApi<Object> response = ResponseApi.builder()
                 .typeException(typeException)
                 .code(errorCode)
+                .timestamp(OffsetDateTime.now().toString())
+                .path(exchange.getRequest().getPath().value())
                 .success(false)
                 .message(message)
                 .data(null)

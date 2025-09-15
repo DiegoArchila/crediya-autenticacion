@@ -1,6 +1,7 @@
 package co.com.crediya.api.reponse;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -18,6 +19,12 @@ public class ResponseApi<T> {
 
     @JsonInclude(NON_NULL)
     private String code;
+
+    @JsonInclude(NON_NULL)
+    private String timestamp;
+
+    @JsonInclude(NON_NULL)
+    private String path;
 
     @JsonInclude(NON_NULL)
     private Boolean success;

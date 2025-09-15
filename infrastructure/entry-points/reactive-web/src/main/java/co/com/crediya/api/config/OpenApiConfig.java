@@ -15,7 +15,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("CrediYA Solicitudes API")
                         .version("1.0.0")
-                        .description("Documentación de la API para el microservicio de Solicitudes de CrediYA")
+                        .description("Documentación de la API para el microservicio de autenticación de CrediYA")
                         .contact(new Contact()
                                 .name("Equipo CrediYA")
                                 .email("soporte@crediya.com")

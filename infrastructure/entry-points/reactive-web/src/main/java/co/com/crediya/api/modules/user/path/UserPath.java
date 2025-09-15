@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "routes.paths")
 public class UserPath {
 
-    private String usuario;
-    private String usuarioEmail;
+    private String user;
+    private String userId;
 
 }
